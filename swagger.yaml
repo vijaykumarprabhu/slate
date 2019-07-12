@@ -1,0 +1,73 @@
+swagger: "2.0"
+info:
+  description: "Documentation for Demo project"
+  version: "0.0.1"
+  title: "Demo Documentation"
+  contact:
+    name: "VIjay Kumar"
+    url: "https://example.com"
+    email: "totallyrealperson@example.com"
+schemes:
+- "http"
+- "https"
+paths:
+  /api/v3/locations/{locationId}/data:
+    get:
+      operationId: "getHistory"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "locationId"
+        in: "path"
+        required: true
+        type: "string"
+      - name: "start"
+        in: "query"
+        required: true
+        type: "string"
+        format: "date-time"
+      - name: "end"
+        in: "query"
+        required: true
+        type: "string"
+        format: "date-time"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/DemoData"
+  /download/{downloadId}:
+    get:
+      operationId: "downloadOneLocationData"
+      parameters:
+      - name: "downloadId"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        400:
+          description: "Bad Request"
+securityDefinitions:
+  basicAuth:
+    type: "basic"
+definitions:
+  DemoData:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+      locationId:
+        type: "string"
+      timestamp:
+        type: "string"
+        format: "date-time"
+      hardwareId:
+        type: "string"
+      datasourceId:
+        type: "string"
+      data:
+        type: "object"
+        additionalProperties:
+          type: "object"
